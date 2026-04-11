@@ -1,0 +1,2323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ULTIMATEX® COMMUNITY</title>
+    <link rel="icon" type="image/png" href="https://i.imgur.com/wDGEyA0.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <!-- External Libraries -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* NEON BLUE RAINBOW PALETTE */
+            --neon-blue: #00f3ff;
+            --deep-blue: #0066ff;
+            --neon-purple: #bc13fe;
+            --neon-pink: #ff006e;
+            --neon-green: #39ff14;
+            --neon-yellow: #ffff00;
+            --neon-red: #ff0000;
+            --bg-dark: #020205;
+            --bg-glass: rgba(0, 10, 30, 0.85);
+            --space-bg: radial-gradient(circle at center, #0b1026 0%, #000000 100%);
+            --sidebar-bg: rgba(5, 10, 20, 0.95);
+        }
+
+        /* === GLOBAL RESET === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Rajdhani', sans-serif;
+            user-select: none;
+        }
+
+        body {
+            min-height: 100vh;
+            background: var(--space-bg);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* === ANIMATIONS === */
+        @keyframes neonPulse {
+            0% { text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue); }
+            50% { text-shadow: 0 0 20px var(--neon-blue), 0 0 40px var(--deep-blue), 0 0 60px var(--neon-purple); }
+            100% { text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue); }
+        }
+
+        @keyframes flowingNeon {
+            0% { border-color: var(--neon-blue); box-shadow: 0 0 10px rgba(0, 243, 255, 0.4); }
+            33% { border-color: var(--deep-blue); box-shadow: 0 0 15px rgba(0, 102, 255, 0.6); }
+            66% { border-color: var(--neon-purple); box-shadow: 0 0 10px rgba(188, 19, 254, 0.4); }
+            100% { border-color: var(--neon-blue); box-shadow: 0 0 10px rgba(0, 243, 255, 0.4); }
+        }
+
+        @keyframes rainbowGlow {
+            0% { box-shadow: 0 0 20px var(--neon-blue); }
+            20% { box-shadow: 0 0 20px var(--neon-green); }
+            40% { box-shadow: 0 0 20px var(--neon-yellow); }
+            60% { box-shadow: 0 0 20px var(--neon-pink); }
+            80% { box-shadow: 0 0 20px var(--neon-purple); }
+            100% { box-shadow: 0 0 20px var(--neon-blue); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        @keyframes pulse-blue {
+            0% { box-shadow: 0 0 5px rgba(0, 243, 255, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(0, 243, 255, 0.6); }
+            100% { box-shadow: 0 0 5px rgba(0, 243, 255, 0.3); }
+        }
+
+        @keyframes pulse-green {
+            0% { box-shadow: 0 0 10px rgba(57, 255, 20, 0.6); }
+            50% { box-shadow: 0 0 25px rgba(57, 255, 20, 0.9); }
+            100% { box-shadow: 0 0 10px rgba(57, 255, 20, 0.6); }
+        }
+
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 10px rgba(255, 0, 0, 0.6); }
+            50% { box-shadow: 0 0 25px rgba(255, 0, 0, 0.9); }
+            100% { box-shadow: 0 0 10px rgba(255, 0, 0, 0.6); }
+        }
+
+        @keyframes moveGradient {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        /* === HEADER === */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 14px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(0, 5, 15, 0.95);
+            backdrop-filter: blur(17px);
+            border-bottom: 3px solid var(--neon-blue);
+            box-shadow: 0 5px 25px rgba(0, 243, 255, 0.3);
+            animation: flowingNeon 6s infinite linear;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+        }
+
+        .menu-toggle {
+            font-size: 23px;
+            color: #fff;
+            cursor: pointer;
+            display: none;
+        }
+
+        .store-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 22px;
+            font-weight: 900;
+            color: #fff;
+            text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--deep-blue);
+            letter-spacing: 2px;
+            animation: neonPulse 3s ease-in-out infinite;
+        }
+
+        .header-announcement {
+            background: linear-gradient(90deg, var(--neon-blue), var(--deep-blue), var(--neon-blue));
+            background-size: 200% 100%;
+            animation: moveGradient 3s linear infinite;
+            color: #000;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 13px;
+            font-family: 'Orbitron';
+            box-shadow: 0 3px 10px rgba(0, 243, 255, 0.4);
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 15px;
+            background: rgba(0, 243, 255, 0.1);
+            border: 2px solid var(--neon-blue);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: pulse-blue 3s ease infinite;
+        }
+
+        .user-info:hover {
+            background: rgba(0, 243, 255, 0.2);
+            box-shadow: 0 0 15px var(--neon-blue);
+            transform: translateY(-2px);
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 2px solid var(--neon-blue);
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: var(--neon-blue);
+            font-family: 'Orbitron';
+        }
+
+        .badge-online {
+            width: 10px;
+            height: 10px;
+            background: var(--neon-green);
+            border-radius: 50%;
+            animation: rainbowGlow 2s ease infinite;
+        }
+
+        /* === SIDEBAR === */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 70px;
+            width: 220px;
+            height: calc(100vh - 70px);
+            background: var(--sidebar-bg);
+            border-right: 2px solid var(--neon-blue);
+            padding: 20px 0;
+            z-index: 900;
+            overflow-y: auto;
+            animation: slideDown 0.6s ease;
+            box-shadow: 5px 0 20px rgba(0, 243, 255, 0.2);
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: var(--neon-blue);
+            border-radius: 3px;
+        }
+
+        .sidebar-section {
+            margin-bottom: 25px;
+        }
+
+        .sidebar-title {
+            padding: 10px 20px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Orbitron';
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            color: #999;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Rajdhani';
+            font-weight: 600;
+        }
+
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: var(--neon-blue);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-item:hover::before,
+        .nav-item.active::before {
+            transform: scaleY(1);
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            background: rgba(0, 243, 255, 0.1);
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        .nav-item i {
+            font-size: 16px;
+            width: 20px;
+        }
+
+        .nav-badge {
+            margin-left: auto;
+            background: var(--neon-blue);
+            color: #000;
+            padding: 3px 9px;
+            border-radius: 9px;
+            font-size: 9px;
+            font-weight: 800;
+            font-family: 'Orbitron';
+        }
+
+        .nav-badge.new {
+            background: var(--neon-pink);
+            animation: rainbowGlow 4s ease infinite;
+        }
+
+        /* === MAIN CONTENT === */
+        .main-content {
+            margin-left: 250px;
+            margin-top: 70px;
+            padding: 60px;
+            min-height: calc(100vh - 80px);
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        /* === WELCOME BANNER === */
+        .welcome-banner {
+            background: linear-gradient(135deg, var(--neon-blue) 0%, var(--deep-blue) 100%);
+            padding: 25px 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(0, 243, 255, 0.4);
+            border: 2px solid var(--neon-blue);
+            animation: flowingNeon 4s infinite linear;
+        }
+
+        .welcome-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 5px;
+            font-family: 'Orbitron';
+        }
+
+        .welcome-subtext {
+            font-size: 14px;
+            color: rgba(0, 0, 0, 0.8);
+            font-family: 'Rajdhani';
+        }
+
+        /* === PURCHASE CONTAINER === */
+        .purchase-container {
+            display: grid;
+            grid-template-columns: 1fr 450px;
+            gap: 30px;
+        }
+
+        .purchase-form-card {
+            background: var(--bg-glass);
+            border: 2px solid var(--neon-blue);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 243, 255, 0.3);
+            animation: flowingNeon 5s infinite linear;
+        }
+
+        .form-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(0, 243, 255, 0.3);
+        }
+
+        .form-header i {
+            font-size: 24px;
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        .form-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--neon-blue);
+            font-family: 'Orbitron';
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        .form-subtitle {
+            font-size: 13px;
+            color: #999;
+            font-family: 'Rajdhani';
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+            font-family: 'Rajdhani';
+        }
+
+        .form-label i {
+            color: var(--neon-blue);
+        }
+
+        .required-star {
+            color: var(--neon-pink);
+            font-weight: 900;
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(0, 243, 255, 0.3);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            outline: none;
+            font-family: 'Rajdhani';
+            font-weight: 600;
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+            background: rgba(0, 243, 255, 0.05);
+        }
+
+        .form-input::placeholder {
+            color: #666;
+        }
+
+        .form-select option {
+            background: var(--bg-dark);
+            color: #fff;
+        }
+
+        .form-hint {
+            font-size: 12px;
+            color: #999;
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-family: 'Rajdhani';
+        }
+
+        .form-hint i {
+            color: var(--neon-yellow);
+        }
+
+        .discount-badge {
+            display: inline-block;
+            background: var(--neon-pink);
+            color: #fff;
+            padding: 3px 9px;
+            border-radius: 11px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: 10px;
+            font-family: 'Orbitron';
+            animation: rainbowGlow 1.5s ease infinite;
+        }
+
+        .btn-purchase {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--neon-blue) 0%, var(--deep-blue) 100%);
+            border: none;
+            border-radius: 8px;
+            color: #000;
+            font-size: 16px;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(0, 243, 255, 0.4);
+            margin-top: 20px;
+            font-family: 'Orbitron';
+        }
+
+        .btn-purchase:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 243, 255, 0.6);
+        }
+
+        .btn-purchase:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-purchase i {
+            margin-right: 8px;
+        }
+
+        .btn-purchase.activate-btn {
+            background: linear-gradient(135deg, var(--neon-green) 0%, #2ecc71 100%);
+        }
+
+        .btn-purchase.activate-btn:hover {
+            box-shadow: 0 8px 25px rgba(57, 255, 20, 0.6);
+        }
+
+        .vip-test-days {
+            display: block;
+            font-size: 12px;
+            margin-top: 5px;
+            font-weight: 600;
+        }
+
+        .help-payment-btn {
+            width: 100%;
+            padding: 12px;
+            background: rgba(188, 19, 254, 0.2);
+            border: 2px solid var(--neon-purple);
+            border-radius: 8px;
+            color: var(--neon-purple);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+            font-family: 'Orbitron';
+        }
+
+        .help-payment-btn:hover {
+            background: rgba(188, 19, 254, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .terms-text {
+            font-size: 12px;
+            color: #999;
+            margin-top: 15px;
+            text-align: center;
+            line-height: 1.6;
+            font-family: 'Rajdhani';
+        }
+
+        .terms-text a {
+            color: var(--neon-blue);
+            text-decoration: none;
+        }
+
+        .terms-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* === SERVER INFO SIDEBAR === */
+        .server-info-card {
+            background: var(--bg-glass);
+            border: 2px solid var(--neon-blue);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0, 243, 255, 0.3);
+            animation: flowingNeon 5s infinite linear;
+            height: fit-content;
+        }
+
+        .info-card-header {
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(0, 243, 255, 0.3);
+            margin-bottom: 20px;
+        }
+
+        .info-card-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--neon-blue);
+            font-family: 'Orbitron';
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        .server-list {
+            margin-bottom: 25px;
+        }
+
+        .server-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .server-item:hover {
+            background: rgba(0, 243, 255, 0.1);
+            border-color: var(--neon-blue);
+            transform: translateX(5px);
+        }
+
+        .server-status-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid;
+            transition: all 0.3s ease;
+        }
+
+        .server-status-indicator.online {
+            background: var(--neon-green);
+            border-color: var(--neon-green);
+            animation: pulse-green 2s ease infinite;
+        }
+
+        .server-status-indicator.offline {
+            background: var(--neon-red);
+            border-color: var(--neon-red);
+            animation: pulse-red 2s ease infinite;
+        }
+
+        .server-status-indicator.loading {
+            background: #666;
+            border-color: #666;
+        }
+
+        .server-details {
+            flex: 1;
+            margin-left: 12px;
+        }
+
+        .server-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+            font-family: 'Rajdhani';
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .server-status-text {
+            font-size: 11px;
+            font-weight: 700;
+            font-family: 'Orbitron';
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+
+        .server-status-text.online {
+            color: var(--neon-green);
+            background: rgba(57, 255, 20, 0.15);
+            border: 1px solid var(--neon-green);
+        }
+
+        .server-status-text.offline {
+            color: var(--neon-red);
+            background: rgba(255, 0, 0, 0.15);
+            border: 1px solid var(--neon-red);
+        }
+
+        .server-ip {
+            font-size: 12px;
+            color: var(--neon-blue);
+            font-family: 'Courier New', monospace;
+        }
+
+        .server-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .server-btn {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            border-radius: 6px;
+            color: var(--neon-blue);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .server-btn:hover {
+            background: rgba(0, 243, 255, 0.2);
+            border-color: var(--neon-blue);
+            transform: scale(1.1);
+        }
+
+        .server-btn i {
+            font-size: 14px;
+        }
+
+        /* === INFO ALERTS === */
+        .info-alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            animation: fadeIn 1s ease;
+            border: 2px solid;
+        }
+
+        .info-alert.promo {
+            background: rgba(255, 0, 110, 0.15);
+            border-color: var(--neon-pink);
+        }
+
+        .info-alert.success {
+            background: rgba(57, 255, 20, 0.15);
+            border-color: var(--neon-green);
+        }
+
+        .info-alert.info {
+            background: rgba(0, 243, 255, 0.15);
+            border-color: var(--neon-blue);
+        }
+
+        .info-alert i {
+            font-size: 20px;
+            margin-top: 2px;
+        }
+
+        .info-alert.promo i {
+            color: var(--neon-pink);
+        }
+
+        .info-alert.success i {
+            color: var(--neon-green);
+        }
+
+        .info-alert.info i {
+            color: var(--neon-blue);
+        }
+
+        .alert-content {
+            flex: 1;
+        }
+
+        .alert-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            font-family: 'Orbitron';
+        }
+
+        .alert-text {
+            font-size: 13px;
+            color: #ccc;
+            line-height: 1.5;
+            font-family: 'Rajdhani';
+        }
+
+        .alert-link {
+            color: var(--neon-blue);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .alert-link:hover {
+            text-decoration: underline;
+        }
+
+        /* === RECENT PURCHASES === */
+        .recent-purchases {
+            background: var(--bg-glass);
+            border: 2px solid var(--neon-blue);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 30px;
+            box-shadow: 0 5px 20px rgba(0, 243, 255, 0.3);
+            animation: flowingNeon 5s infinite linear;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(0, 243, 255, 0.3);
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+            font-family: 'Orbitron';
+        }
+
+        .section-title i {
+            color: var(--neon-blue);
+            margin-right: 10px;
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        .purchase-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .purchase-table thead {
+            background: rgba(0, 243, 255, 0.1);
+        }
+
+        .purchase-table th {
+            padding: 12px 15px;
+            text-align: left;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--neon-blue);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid var(--neon-blue);
+            font-family: 'Orbitron';
+        }
+
+        .purchase-table td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(0, 243, 255, 0.2);
+            font-size: 14px;
+            font-family: 'Rajdhani';
+        }
+
+        .purchase-table tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        .purchase-table tbody tr:hover {
+            background: rgba(0, 243, 255, 0.05);
+        }
+
+        .player-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .player-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 2px solid var(--neon-blue);
+        }
+
+        .player-name {
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .server-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            background: rgba(0, 243, 255, 0.2);
+            border: 1px solid var(--neon-blue);
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--neon-blue);
+            font-family: 'Orbitron';
+        }
+
+        .purchase-date {
+            color: #999;
+            font-size: 13px;
+        }
+
+        /* === BANNER ITEMS === */
+        .list-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .banner-item {
+            background: rgba(0, 5, 10, 0.6);
+            border: 2px solid var(--neon-blue);
+            padding: 20px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            transition: 0.3s;
+            animation: flowingNeon 5s infinite linear;
+        }
+
+        .banner-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 243, 255, 0.3);
+        }
+
+        .banner-img {
+            width: 200px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 15px;
+            border: 2px solid var(--neon-blue);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .banner-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px var(--neon-blue);
+        }
+
+        .banner-info {
+            flex: 1;
+            text-align: left;
+        }
+
+        .banner-title {
+            font-family: 'Orbitron';
+            font-size: 24px;
+            color: #fff;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        .banner-price {
+            font-family: 'Orbitron';
+            font-size: 20px;
+            color: var(--neon-blue);
+            font-weight: 900;
+        }
+
+        .btn-buy-now {
+            background: #fff;
+            color: #000;
+            font-family: 'Orbitron';
+            font-size: 16px;
+            font-weight: 900;
+            padding: 10px 25px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            animation: flowingNeon 3s infinite linear;
+        }
+
+        .btn-buy-now:hover {
+            background: var(--neon-blue);
+            color: #000;
+            transform: scale(1.05);
+        }
+
+        /* === MODALS === */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-glass);
+            border: 2px solid var(--neon-blue);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: fadeIn 0.3s ease;
+            box-shadow: 0 10px 40px rgba(0, 243, 255, 0.4);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(0, 243, 255, 0.3);
+        }
+
+        .modal-title {
+            font-family: 'Orbitron';
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        .modal-close {
+            font-family: 'Orbitron';
+            color: #fff;
+            font-size: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .modal-close:hover {
+            color: var(--neon-pink);
+            text-shadow: 0 0 15px var(--neon-pink);
+            transform: rotate(90deg);
+        }
+
+        /* === NOTIFICATION === */
+        .notification-box {
+            position: fixed;
+            top: 100px;
+            right: -300px;
+            background: rgba(0, 5, 20, 0.95);
+            border: 2px solid var(--neon-blue);
+            padding: 15px 25px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.4);
+            z-index: 20000;
+            transition: right 0.5s ease;
+            animation: flowingNeon 3s infinite linear;
+        }
+
+        .notification-box.show {
+            right: 20px;
+        }
+
+        .notif-icon {
+            color: var(--neon-blue);
+            font-size: 20px;
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        .notif-text {
+            font-family: 'Orbitron';
+            color: #fff;
+            font-size: 14px;
+        }
+
+        /* === CLIENT SECTION === */
+        .client-layout {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        .client-info {
+            flex: 1;
+            text-align: left;
+        }
+
+        .client-desc-text {
+            font-family: 'Rajdhani';
+            font-size: 16px;
+            color: #ccc;
+            line-height: 1.8;
+            margin-top: 15px;
+        }
+
+        .client-images {
+            display: flex;
+            gap: 20px;
+        }
+
+        .client-img-side {
+            width: 250px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 15px;
+            border: 2px solid var(--neon-blue);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .client-img-side:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px var(--neon-blue);
+        }
+
+        .btn-buy-main {
+            background: #fff;
+            color: #000;
+            font-family: 'Orbitron';
+            font-size: 24px;
+            font-weight: 900;
+            padding: 15px 50px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 25px;
+            text-decoration: none;
+            display: inline-block;
+            animation: flowingNeon 3s infinite linear;
+        }
+
+        .btn-buy-main:hover {
+            background: var(--neon-blue);
+            color: #000;
+            transform: scale(1.15);
+        }
+
+        /* === HOME BUTTONS MODIFIED === */
+        .home-btn-container {
+            display: flex;
+            flex-direction: column; /* Vertical alignment */
+            align-items: center; /* Center content */
+            gap: 35px;
+            margin-top: 50px;
+        }
+
+        .btn-wrapper {
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .label-style {
+            font-family: 'Orbitron';
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: block;
+            min-height: 30px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .flat-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: transparent !important;
+            font-family: 'Orbitron';
+            text-transform: uppercase;
+            text-decoration: none;
+            border: 2px solid;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-radius: 50px;
+            font-weight: 900;
+            padding: 16px 35px;
+            font-size: 16px;
+        }
+
+        .btn-online-flat {
+            animation: pulse-blue 2s infinite ease-in-out;
+            border-color: var(--neon-blue);
+            color: var(--neon-blue);
+        }
+
+        .btn-online-flat:hover {
+            background: var(--neon-blue) !important;
+            color: #000 !important;
+        }
+
+        .btn-vip-flat {
+            animation: rainbowGlow 2s infinite ease-in-out;
+            border-color: #ffffff;
+            color: #ffffff;
+            padding: 22px 0;
+            font-size: 1.5rem; /* Larger for center */
+            transform: scale(1.1);
+        }
+
+        .btn-vip-flat:hover {
+            background: #ffffff !important;
+            color: #000 !important;
+        }
+
+        .btn-discord-flat {
+            animation: pulse-blue 2s infinite ease-in-out;
+            border-color: #7289da;
+            color: #7289da;
+        }
+
+        .btn-discord-flat:hover {
+            background: #7289da !important;
+            color: #fff !important;
+        }
+
+        .xmas-title-style {
+            font-family: 'Orbitron';
+            color: #fff;
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        .xmas-gold-style {
+            font-family: 'Orbitron';
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px var(--deep-blue);
+            font-weight: 900;
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 1200px) {
+            .purchase-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .sidebar.mobile-open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .banner-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .banner-img {
+                width: 100%;
+            }
+
+            .header-announcement {
+                display: none;
+            }
+
+            .client-layout {
+                flex-direction: column;
+            }
+
+            .client-images {
+                flex-direction: column;
+            }
+
+            .client-img-side {
+                width: 100%;
+            }
+        }
+
+        /* === IMAGE ZOOM === */
+        #image-zoom-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100000;
+            cursor: zoom-out;
+        }
+
+        #image-zoom-overlay.active {
+            display: flex;
+        }
+
+        #image-zoom-overlay img {
+            max-width: 90%;
+            max-height: 90%;
+            border: 3px solid var(--neon-blue);
+            border-radius: 10px;
+            animation: flowingNeon 4s infinite linear;
+        }
+
+        .close-zoom-btn {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            font-family: 'Orbitron';
+            color: #fff;
+            font-size: 40px;
+            font-weight: 900;
+            cursor: pointer;
+            text-shadow: 0 0 15px var(--neon-blue);
+        }
+
+        .error-msg {
+            color: var(--neon-pink);
+            font-size: 14px;
+            margin-top: 10px;
+            font-family: 'Orbitron';
+            font-weight: 600;
+            display: none;
+        }
+
+        .acc-logo {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 2px solid var(--neon-blue);
+            background: var(--neon-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-weight: 900;
+            font-family: 'Orbitron';
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(0, 243, 255, 0.3);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            outline: none;
+            font-family: 'Rajdhani';
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .login-input:focus {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+        }
+
+        .account-info-display {
+            padding: 20px;
+            background: rgba(0, 243, 255, 0.05);
+            border: 2px solid var(--neon-blue);
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0, 243, 255, 0.2);
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-family: 'Orbitron';
+            color: var(--neon-blue);
+            font-weight: 700;
+        }
+
+        .info-value {
+            font-family: 'Rajdhani';
+            color: #fff;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Image Zoom -->
+    <div id="image-zoom-overlay" onclick="closeZoom()">
+        <span class="close-zoom-btn">X</span>
+        <img id="zoomed-image-src" src="" onclick="event.stopPropagation()">
+    </div>
+
+    <!-- Notification -->
+    <div id="notification-box" class="notification-box">
+        <i class="fa-solid fa-circle-check notif-icon"></i>
+        <span class="notif-text">Success!</span>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="header-left">
+            <div class="menu-toggle" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="store-logo">ULTIMATEX® COMMUNITY</div>
+            <div class="header-announcement">
+                All Privileges Are Permanent!
+            </div>
+        </div>
+        <div class="header-controls">
+            <div class="user-info" onclick="openAccountModal()">
+                <span class="user-name" id="user-display-name">No Account</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-section">
+            <div class="sidebar-title">Home Pages</div>
+            <a href="home" class="nav-item active">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="personal-account" class="nav-item ">
+                <i class="fas fa-user"></i>
+                <span>Personal Account</span>
+            </a>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-title">Store</div>
+            
+            <a href="buy-privileges" class="nav-item " style="display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-crown"></i>
+                <span>Buy Privileges</span>
+                <span style="padding: 2px 5px; background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple)); border-radius: 5px; font-family: 'Orbitron'; font-weight: 750; font-size: 7px; color: #fff; text-shadow: 0 0 4px rgba(255, 255, 255, 0.8); animation: rainbowGlow 3s infinite; box-shadow: 0 0 8px var(--neon-pink); white-space: nowrap;">
+                    <i class="fas fa-fire" style="font-size: 5px;"></i> Discount 77%
+                </span>
+            </a>
+
+            <a href="custom-player-skin" class="nav-item ">
+                <i class="fas fa-user-ninja"></i>
+                <span>Custom Player Skin</span>
+            </a>
+            <a href="official-client" class="nav-item ">
+                <i class="fas fa-download"></i>
+                <span>Official Client</span>
+            </a>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-title">Information</div>
+            <a href="testers-list" class="nav-item ">
+                <i class="fas fa-list"></i>
+                <span>Testers List</span>
+            </a>
+            <a href="tech-support" class="nav-item ">
+                <i class="fas fa-tools"></i>
+                <span>Tech Support</span>
+            </a>
+        </div>
+    </div> class="main-content"> ```
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- HOME SECTION -->
+        <div id="home" class="content-section active">
+            <h1 style="font-family:'Orbitron'; font-size: 40px; color: #fff; text-shadow: 0 0 24px var(--neon-blue); margin-top: 25px; margin-bottom: 5px;">
+                WELCOME TO
+            </h1>
+            <h2 style="font-family:'Orbitron'; font-size: 38px; color: var(--neon-blue); margin-bottom: 50px; letter-spacing: 4px; text-shadow: 0 0 30px var(--neon-blue);">
+                ULTIMATEX® COMMUNITY
+            </h2>
+
+            <div class="home-btn-container">
+                <!-- Button 1: Buy Privilege (Centered, Top) -->
+                <div class="btn-wrapper" style="width: 340px;">
+                    <span class="label-style" style="color: #fff; font-weight: bold; font-size: 1.1rem;">Do You Want Privilege?</span>
+                    <a href="buy-privileges" class="flat-btn btn-vip-flat" style="width: 330px; text-decoration: none;">
+                        <i class="fa-solid fa-crown"></i> Buy Privilege
+                    </a>
+                </div>
+
+                <!-- Button 2: Discord (Centered, Bottom) -->
+                <div class="btn-wrapper" style="width: 300px;">
+                    <span class="label-style" style="color: #7289da;">You Are Not In Our Discord</span>
+                    <a href="https://discord.gg/95Pn9AYr3e" target="_blank" class="flat-btn btn-discord-flat" style="width: 270px;">
+                        <i class="fa-brands fa-discord"></i> Join Discord
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- PERSONAL ACCOUNT SECTION -->
+        <div id="personal-account" class="content-section ">
+            <h2 class="xmas-title-style" style="font-size: 50px; margin-bottom: 30px;">Personal Account</h2>
+            <div id="account-content" style="text-align: center; padding: 20px; max-width: 600px; margin: 0 auto;">
+                <!-- Login Form (shown when not logged in) -->
+                <div id="login-form-page">
+                    <i class="fa-solid fa-user-circle" style="font-size: 80px; color: var(--neon-blue); text-shadow: 0 0 20px var(--neon-blue);"></i>
+                    <h3 style="font-family: 'Orbitron'; color: #fff; margin: 20px 0;">Login to Your Account</h3>
+                    <p style="color: #999;">You can login with your Counter-Strike Account</p>
+                    <input type="text" class="login-input" id="login-nickname-page" placeholder="Nickname">
+                    <input type="password" class="login-input" id="login-password-page" placeholder="Password">
+                    <button class="btn-buy-now" style="margin-top: 10px;" onclick="handleLoginPage()">
+                        <i class="fa-solid fa-right-to-bracket"></i> Login
+                    </button>
+                </div>
+
+                <!-- Account Info (shown when logged in) -->
+                <div id="account-info-page" style="display: none;">
+                    <i class="fa-solid fa-user-circle" style="font-size: 80px; color: var(--neon-blue); text-shadow: 0 0 20px var(--neon-blue);"></i>
+                    <div class="account-info-display">
+                        <div class="info-row">
+                            <span class="info-label">Nickname:</span>
+                            <span class="info-value" id="acc-nickname-page"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Member Since:</span>
+                            <span class="info-value" id="acc-member-since-page"></span>
+                        </div>
+                    </div>
+                    <button class="btn-buy-now" style="margin-top: 20px;" onclick="handleLogoutPage()">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- BUY PRIVILEGES SECTION -->
+        <div id="privileges" class="content-section ">
+            <div class="purchase-container">
+                <!-- Purchase Form -->
+                <div class="purchase-form-card">
+                    <div class="form-header">
+                        <div>
+                            <div class="form-title">Buy Privilege</div>
+                            <div class="form-subtitle">Remember our Privileges in both servers are Permanent!</div>
+                        </div>
+                    </div>
+
+                    <form id="purchase-form" onsubmit="handlePurchase(event)">
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-server"></i>
+                                Select Server:
+                            </label>
+                            <select class="form-select" id="server-select" required onchange="updatePrivileges()">
+                                <option value="">Choose server</option>
+                                <option value="zpux">Zombie Plague ULTIMATEX</option>
+                                <option value="emcz">Eat Me Completely Zombie</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-star"></i>
+                                Choose Privilege
+                                <span class="discount-badge">Discount 77%</span>
+                            </label>
+                            <select class="form-select" id="privilege-select" required disabled>
+                                <option value="">First choose server!</option>
+                            </select>
+                            <div class="error-msg" id="privilege-error">First choose server!</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-user"></i>
+                                Nickname:
+                                <span class="required-star">(In Counter-Strike 1.6)</span>
+                            </label>
+                            <input type="text" class="form-input" id="nickname-input" placeholder="Enter your nickname (English letters and numbers)" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-lock"></i>
+                                Password:
+                                <span class="required-star">(Create Password)</span>
+                            </label>
+                            <input type="password" class="form-input" id="password-input" placeholder="Create Password (At least 6 characters)" required>
+                            <div class="form-hint">
+                                <i class="fas fa-info-circle"></i>
+                                Password for personal cabinet login
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="payment-method-group">
+                            <label class="form-label">
+                                <i class="fas fa-credit-card"></i>
+                                Payment Method:
+                            </label>
+                            <select class="form-select" id="payment-select" required>
+                                <option value="">Choose payment method</option>
+                                <option value="paypal">PayPal</option>
+                            </select>
+                        </div>
+
+                        <button type="button" class="help-payment-btn" onclick="showPaymentHelp()" id="help-btn">
+                            <i class="fas fa-question-circle"></i>
+                            Help
+                        </button>
+
+                        <button type="submit" class="btn-purchase" id="purchase-btn">
+                            <i class="fas fa-shopping-cart"></i>
+                            Buy Now
+                        </button>
+
+                        <div class="terms-text">
+                            When you buy Privilege you can login in your Personal Account
+                            With The Username and Password That you Write!
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Server Info Sidebar -->
+                <div class="server-info-card">
+                    <div class="info-card-header">
+                        <div class="info-card-title">Our Servers:</div>
+                    </div>
+
+                    <div class="server-list">
+                        <div class="server-item">
+                            <div class="server-status-indicator loading" id="status-indicator-1"></div>
+                            <div class="server-details">
+                                <div class="server-name">
+                                    Zombie Plague ULTIMATEX
+                                    <span class="server-status-text offline" id="status-text-1">Loading...</span>
+                                </div>
+                                <div class="server-ip">5.39.63.207:9578</div>
+                            </div>
+                            <div class="server-actions">
+                                <button class="server-btn" onclick="copyIP('5.39.63.207:9578')">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="server-item">
+                            <div class="server-status-indicator loading" id="status-indicator-2"></div>
+                            <div class="server-details">
+                                <div class="server-name">
+                                    Eat Me Completely Zombie
+                                    <span class="server-status-text offline" id="status-text-2">Loading...</span>
+                                </div>
+                                <div class="server-ip">5.39.63.207:SOON!</div>
+                            </div>
+                            <div class="server-actions">
+                                <button class="server-btn" onclick="copyIP('5.39.63.207:SOON')">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-alert promo">
+                        <i class="fas fa-gift"></i>
+                        <div class="alert-content">
+                            <div class="alert-title">You can get ViP Test 5 days!</div>
+                            <div class="alert-text">
+                                Just join our <a href="https://discord.gg/95Pn9AYr3e" target="_blank" class="alert-link">Discord</a> Community!
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-alert success">
+                        <i class="fas fa-infinity"></i>
+                        <div class="alert-content">
+                            <div class="alert-title">All Privileges Are Permanent!</div>
+                            <div class="alert-text">
+                                Enjoy Forever With your <a class="alert-link">Permanent</a> Privilege!
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-alert info">
+                        <i class="fas fa-wrench"></i>
+                        <div class="alert-content">
+                            <div class="alert-title">Join Our Discord Community!</div>
+                            <div class="alert-text">
+                                Join our <a href="https://discord.gg/95Pn9AYr3e" target="_blank" class="alert-link">Discord</a> For Updates and Support!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LIST SECTION -->
+        <div id="Testers" class="content-section ">
+            <div class="recent-purchases">
+                <div class="section-header">
+                    <div class="section-title">
+                        <i class="fas fa-list"></i>
+                        Recent Testers
+                    </div>
+                </div>
+                <table class="purchase-table">
+                    <thead>
+                        <tr>
+                            <th><i class="fas fa-user"></i> Nickname</th>
+                            <th><i class="fas fa-crown"></i> Privilege</th>
+                            <th><i class="fas fa-server"></i> Server</th>
+                            <th><i class="fas fa-calendar"></i> Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="Testers-table-body">
+                        <tr>
+                            <td colspan="4" style="text-align: center; color: #999;">Loading...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- CUSTOM PLAYER SKINS SECTION -->
+        <div id="skins" class="content-section ">
+            <h2 class="xmas-title-style" style="font-size: 50px; margin-bottom: 30px;">Custom Player Skins</h2>
+            <div class="list-container">
+                <div class="banner-item">
+                    <img src="U_STORE_B7_GIRL.png" alt="B7 Girl Black+Pink" class="banner-img" onclick="zoomImg(this.src)" onerror="this.src='https://via.placeholder.com/200x150?text=Assassin+Skin'">
+                    <div class="banner-info">
+                        <h3 class="banner-title">B7 Girl Black + Pink</h3>
+                        <span class="banner-price">€1.99 EUR</span>
+                    </div>
+                    <button class="btn-buy-now" onclick="window.open('https://paypal.com/b7girlblackandpink', '_blank')">BUY NOW</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- OFFICIAL CLIENT SECTION -->
+        <div id="official-client" class="content-section ">
+            <div class="banner-item client-layout">
+                <div class="client-info">
+                    <h1 class="xmas-title-style" style="font-size: 25px;">You Want Clean CS 1.6 VERSION?</h1>
+                    <h2 class="xmas-gold-style" style="font-size: 20px; margin-top: 10px;">Download Our OFFICIAL Clean Client!</h2>
+                    <p class="client-desc-text">
+                        📌What Have Our Client:<br>
+                        ✅ULTIMATEX STYLE<br>
+                        ✅CLEAN SETTINGS<br>
+                        ✅SMOOTH GAMEPLAY<br>
+                        ✅BOOSTED FPS<br>
+                        ✅STEAM VERSION<br>
+                        ✅MASTER SERVERS BY: TSARVAR
+                    </p>
+                    <button class="btn-buy-main" onclick="handleDownload()">Download Now!</button>
+                </div>
+                <div class="client-images">
+                    <img src="U_STORE_OFFICIAL_CLIENT_IMG1.png" class="client-img-side" onclick="zoomImg(this.src)" onerror="this.src='https://via.placeholder.com/250x180?text=Client+Preview'">
+                    <img src="U_STORE_OFFICIAL_CLIENT_IMG2.png" class="client-img-side" onclick="zoomImg(this.src)" onerror="this.src='https://via.placeholder.com/250x180?text=Client+Preview+2'">
+                </div>
+            </div>
+        </div>
+
+        <!-- TECH SUPPORT SECTION -->
+        <div id="tech-support" class="content-section ">
+            <h2 class="xmas-title-style" style="font-size: 50px; margin-bottom: 30px;">Technical Support</h2>
+            <div style="text-align: center; padding: 40px; max-width: 800px; margin: 0 auto;">
+                <i class="fa-solid fa-headset" style="font-size: 80px; color: var(--neon-blue); text-shadow: 0 0 20px var(--neon-blue);"></i>
+                <h3 style="font-family: 'Orbitron'; color: #fff; margin: 30px 0 20px 0; font-size: 28px;">Need Technical Assistance?</h3>
+                <p style="color: #ccc; font-family: 'Rajdhani'; font-size: 18px; line-height: 1.8; margin-bottom: 30px;">
+                    Our technical support team is here to help you with any issues.<br>
+                    For the fastest response, please contact us via:
+                </p>
+                <div style="background: var(--bg-glass); border: 2px solid var(--neon-blue); border-radius: 12px; padding: 30px; margin-top: 30px;">
+                    <h4 style="font-family: 'Orbitron'; color: var(--neon-blue); margin-bottom: 15px;">Official Email</h4>
+                    <a href="mailto:ultimatexbusiness@gmail.com" style="color: #fff; font-family: 'Orbitron'; font-size: 20px; font-weight: 700; text-decoration: none;">
+                        ultimatexbusiness@gmail.com
+                    </a>
+                    <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(0, 243, 255, 0.2);">
+                        <h4 style="font-family: 'Orbitron'; color: var(--neon-blue); margin-bottom: 15px;">Or Join Our Discord</h4>
+                        <button class="btn-buy-now" onclick="window.open('https://discord.gg/95Pn9AYr3e', '_blank')">
+                            <i class="fab fa-discord"></i> Join Discord Server
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Account Modal -->
+    <div id="account-modal" class="modal-overlay" onclick="closeAccountModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <div class="modal-title">👤 PERSONAL CABINET</div>
+                <span class="modal-close" onclick="closeAccountModal()">×</span>
+            </div>
+            <div id="account-content" style="text-align: center; padding: 20px;">
+                <!-- Login Form (shown when not logged in) -->
+                <div id="login-form">
+                    <i class="fa-solid fa-user-circle" style="font-size: 80px; color: var(--neon-blue); text-shadow: 0 0 20px var(--neon-blue);"></i>
+                    <h3 style="font-family: 'Orbitron'; color: #fff; margin: 20px 0;">Login to Your Account</h3>
+                    <p style="color: #999;">You can login with your Counter-Strike Account</p>
+                    <input type="text" class="login-input" id="login-nickname" placeholder="Nickname">
+                    <input type="password" class="login-input" id="login-password" placeholder="Password">
+                    <button class="btn-buy-now" style="margin-top: 10px;" onclick="handleLogin()">
+                        <i class="fa-solid fa-right-to-bracket"></i> Login
+                    </button>
+                </div>
+
+                <!-- Account Info (shown when logged in) -->
+                <div id="account-info" style="display: none;">
+                    <i class="fa-solid fa-user-circle" style="font-size: 80px; color: var(--neon-blue); text-shadow: 0 0 20px var(--neon-blue);"></i>
+                    <div class="account-info-display">
+                        <div class="info-row">
+                            <span class="info-label">Nickname:</span>
+                            <span class="info-value" id="acc-nickname"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Member Since:</span>
+                            <span class="info-value" id="acc-member-since"></span>
+                        </div>
+                    </div>
+                    <button class="btn-buy-now" style="margin-top: 20px;" onclick="handleLogout()">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Support Modal -->
+    <div id="support-modal" class="modal-overlay" onclick="closeSupportModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <div class="modal-title">🎧 TECHNICAL SUPPORT</div>
+                <span class="modal-close" onclick="closeSupportModal()">×</span>
+            </div>
+            <div style="text-align: center; padding: 20px;">
+                <i class="fa-solid fa-headset" style="font-size: 80px; color: var(--neon-blue); text-shadow: 0 0 20px var(--neon-blue);"></i>
+                <h3 style="font-family: 'Orbitron'; color: #fff; margin: 20px 0;">Do you have any Problem?</h3>
+                <p style="color: #ccc; font-family: 'Rajdhani'; font-size: 16px;">
+                    Write us a message in our official Email:<br>
+                    <a href="mailto:ultimatexbusiness@gmail.com" style="color: var(--neon-blue); font-family: 'Orbitron'; font-weight: 700;">
+                        ultimatexbusiness@gmail.com
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // === SERVER STATUS TRACKING (SAME LOGIC AS TRACKING.HTML) ===
+
+        // Update server status using tracking logic
+        function updateServerStatus(serverId, serverType) {
+            fetch("status.php?server=" + serverType + "&t=" + Date.now())
+                .then(res => res.json())
+                .then(data => {
+                    const indicator = document.getElementById('status-indicator-' + serverId);
+                    const statusText = document.getElementById('status-text-' + serverId);
+
+                    if (data && data.online) {
+                        // Server is ONLINE
+                        indicator.classList.remove('loading', 'offline');
+                        indicator.classList.add('online');
+
+                        statusText.classList.remove('offline');
+                        statusText.classList.add('online');
+                        statusText.textContent = 'Online';
+                    } else {
+                        // Server is OFFLINE
+                        indicator.classList.remove('loading', 'online');
+                        indicator.classList.add('offline');
+
+                        statusText.classList.remove('online');
+                        statusText.classList.add('offline');
+                        statusText.textContent = 'Offline';
+                    }
+                })
+                .catch(e => {
+                    console.error("Error checking server " + serverId, e);
+                    // On error, show as offline
+                    const indicator = document.getElementById('status-indicator-' + serverId);
+                    const statusText = document.getElementById('status-text-' + serverId);
+
+                    indicator.classList.remove('loading', 'online');
+                    indicator.classList.add('offline');
+
+                    statusText.classList.remove('online');
+                    statusText.classList.add('offline');
+                    statusText.textContent = 'Offline';
+                });
+        }
+
+        // Auto refresh server status every 2 seconds (same as tracking)
+        function autoRefreshServerStatus() {
+            updateServerStatus(1, 'ultimatex'); // First server
+            updateServerStatus(2, 'emcz'); // Second server
+        }
+
+        // Start auto refresh
+        setInterval(autoRefreshServerStatus, 2000);
+        autoRefreshServerStatus(); // Initial call
+
+        // === REST OF THE ORIGINAL CODE ===
+
+        // Privilege data for both servers
+        const privilegesData = {
+            zpux: [
+                { value: 'viptest', text: 'ViP Test - €0.00', link: '', isTest: true },
+                { value: 'vip', text: 'ViP - €1.99', link: 'https://paypal.com/vip' },
+                { value: 'supervip', text: 'Super-ViP - €3.99', link: 'https://paypal.com/supervip' },
+                { value: 'admin', text: 'Admin - €7.99', link: 'https://paypal.com/admin' },
+                { value: 'megavip', text: 'Head-Admin - €12.99', link: 'https://paypal.com/headadmin' },
+                { value: 'megaadmin', text: 'Owner - €19.99', link: 'https://paypal.com/owner' },
+                { value: 'owner', text: 'Founder - €29.99', link: 'https://paypal.com/founder' },
+                { value: 'battlepass', text: 'Battle Pass - €4.99 (Month)', link: 'https://paypal.com/battlepass' }
+            ],
+            emcz: [
+                { value: 'vip', text: 'VIP - €2.99', link: 'https://paypal.com/emcz-vip' },
+                { value: 'admin', text: 'ADMIN - €4.99', link: 'https://paypal.com/emcz-admin' },
+                { value: 'boss', text: 'BOSS - €7.99', link: 'https://paypal.com/emcz-boss' },
+                { value: 'epic', text: 'EPIC - €9.99', link: 'https://paypal.com/emcz-epic' },
+                { value: 'ultra', text: 'ULTRA - €12.99', link: 'https://paypal.com/emcz-ultra' },
+                { value: 'deluxe', text: 'DELUXE - €19.99', link: 'https://paypal.com/emcz-deluxe' },
+                { value: 'owner', text: 'OWNER - €29.99', link: 'https://paypal.com/emcz-owner' },
+                { value: 'founder', text: 'FOUNDER - €39.99', link: 'https://paypal.com/emcz-founder' },
+                { value: 'battlepass', text: 'BATTLE PASS - €4.99 (Month)', link: 'https://paypal.com/emcz-battlepass' }
+            ]
+        };
+
+        // Update privileges based on selected server
+        function updatePrivileges() {
+            const serverSelect = document.getElementById('server-select');
+            const privilegeSelect = document.getElementById('privilege-select');
+            const errorMsg = document.getElementById('privilege-error');
+
+            const server = serverSelect.value;
+
+            if (!server) {
+                privilegeSelect.disabled = true;
+                privilegeSelect.innerHTML = '<option value="">First choose server!</option>';
+                errorMsg.style.display = 'block';
+                return;
+            }
+
+            privilegeSelect.disabled = false;
+            errorMsg.style.display = 'none';
+            privilegeSelect.innerHTML = '<option value="">Choose privilege</option>';
+
+            privilegesData[server].forEach(priv => {
+                const option = document.createElement('option');
+                option.value = priv.value;
+                option.textContent = priv.text;
+                option.setAttribute('data-link', priv.link);
+                option.setAttribute('data-is-test', priv.isTest || false);
+                privilegeSelect.appendChild(option);
+            });
+
+            // Reset button text when server changes
+            updateButtonForPrivilege();
+        }
+
+        // Update button text and visibility based on privilege selection
+        function updateButtonForPrivilege() {
+            const privilegeSelect = document.getElementById('privilege-select');
+            const selectedOption = privilegeSelect.options[privilegeSelect.selectedIndex];
+            const isTest = selectedOption ? selectedOption.getAttribute('data-is-test') === 'true' : false;
+
+            const purchaseBtn = document.getElementById('purchase-btn');
+            const paymentGroup = document.getElementById('payment-method-group');
+            const paymentSelect = document.getElementById('payment-select');
+            const helpBtn = document.getElementById('help-btn');
+
+            if (isTest) {
+                // ViP Test selected
+                purchaseBtn.innerHTML = '<i class="fas fa-check-circle"></i> Activate ViP Test<span class="vip-test-days">5 Days!</span>';
+                purchaseBtn.classList.add('activate-btn');
+                paymentGroup.style.display = 'none';
+                paymentSelect.removeAttribute('required');
+                helpBtn.style.display = 'none';
+            } else {
+                // Regular privilege selected
+                purchaseBtn.innerHTML = '<i class="fas fa-shopping-cart"></i> Buy Now';
+                purchaseBtn.classList.remove('activate-btn');
+                paymentGroup.style.display = 'block';
+                paymentSelect.setAttribute('required', 'required');
+                helpBtn.style.display = 'block';
+            }
+        }
+
+        // Listen to privilege changes
+        document.addEventListener('DOMContentLoaded', function() {
+            const privilegeSelect = document.getElementById('privilege-select');
+            privilegeSelect.addEventListener('change', updateButtonForPrivilege);
+        });
+
+        // Handle purchase
+        function handlePurchase(e) {
+            e.preventDefault();
+
+            const server = document.getElementById('server-select').value;
+            const privilegeSelect = document.getElementById('privilege-select');
+            const privilege = privilegeSelect.value;
+            const nick = document.getElementById('nickname-input').value.trim();
+            const pass = document.getElementById('password-input').value.trim();
+            const payment = document.getElementById('payment-select').value;
+
+            if (!server) {
+                showNotification('Please select a server first!', 'error');
+                return;
+            }
+
+            if (!privilege || !nick || !pass) {
+                showNotification('Please fill all fields!', 'error');
+                return;
+            }
+
+            // Check if ViP Test is selected
+            const selectedOption = privilegeSelect.options[privilegeSelect.selectedIndex];
+            const isTest = selectedOption.getAttribute('data-is-test') === 'true';
+
+            if (isTest) {
+                // Handle ViP Test activation
+                activateVipTest(nick, pass, server);
+            } else {
+                // Handle regular purchase
+                if (!payment || payment !== 'paypal') {
+                    showNotification('Please select PayPal as payment method!', 'error');
+                    return;
+                }
+
+                const paypalLink = selectedOption.getAttribute('data-link');
+
+                // Save purchase data to localStorage (just locally for redirect)
+                const purchaseData = {
+                    nickname: nick,
+                    password: pass,
+                    privilege: selectedOption.textContent.split(' - ')[0],
+                    server: server === 'zpux' ? 'Zombie Plague ULTIMATEX' : 'Eat Me Completely Zombie',
+                    date: new Date().toISOString()
+                };
+
+                localStorage.setItem('pendingPurchase', JSON.stringify(purchaseData));
+
+                // Open PayPal link
+                window.open(paypalLink, '_blank');
+
+                showNotification('Redirecting to PayPal...', 'success');
+            }
+        }
+
+        // Activate ViP Test (sends request to PHP backend in same file)
+        function activateVipTest(nickname, password, server) {
+            // Show loading notification
+            showNotification('Processing ViP Test activation...', 'info');
+
+            // Send data to PHP backend (CURRENT FILE)
+            fetch(window.location.href, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'activate_vip_test',
+                        nickname: nickname,
+                        password: password,
+                        server: server
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showNotification('✅ ViP Test Activated Successfully!', 'success');
+
+                        // Записване в локалния сторидж само за логин (Personal Cabinet)
+                         const userData = {
+                            nickname: nickname,
+                            password: password,
+                            memberSince: new Date().toLocaleDateString()
+                        };
+                         // Тук записваме само локално за да можеш да влезеш в акаунта си
+                         let users = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+                         users.push(userData);
+                         localStorage.setItem('registeredUsers', JSON.stringify(users));
+
+                        // Reset form
+                        document.getElementById('purchase-form').reset();
+                        updatePrivileges();
+                    } else {
+                        showNotification(data.message || 'Activation failed', 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showNotification('Connection error. Please try again!', 'error');
+                });
+        }
+
+        // Mobile Menu
+        function toggleMobileMenu() {
+            document.getElementById('sidebar').classList.toggle('mobile-open');
+        }
+
+        // Image Zoom
+        function zoomImg(src) {
+            document.getElementById('zoomed-image-src').src = src;
+            document.getElementById('image-zoom-overlay').classList.add('active');
+        }
+
+        function closeZoom() {
+            document.getElementById('image-zoom-overlay').classList.remove('active');
+        }
+
+        // Notification Modified for icons
+        function showNotification(msg, type = 'success') {
+            const notif = document.getElementById('notification-box');
+            const notifText = notif.querySelector('.notif-text');
+            const notifIcon = notif.querySelector('.notif-icon');
+
+            notifText.textContent = msg;
+
+            // Reset classes
+            notifIcon.className = 'fa-solid notif-icon';
+            notif.style.borderColor = 'var(--neon-blue)';
+            notifIcon.style.color = 'var(--neon-blue)';
+
+            if (type === 'error') {
+                 notifIcon.classList.add('fa-circle-xmark');
+                 notif.style.borderColor = 'var(--neon-red)';
+                 notifIcon.style.color = 'var(--neon-red)';
+            } else if (type === 'success') {
+                notifIcon.classList.add('fa-circle-check');
+                notif.style.borderColor = 'var(--neon-green)';
+                notifIcon.style.color = 'var(--neon-green)';
+            } else {
+                 notifIcon.classList.add('fa-info-circle');
+            }
+
+            notif.classList.add('show');
+            setTimeout(() => notif.classList.remove('show'), 3000);
+        }
+
+        // Copy IP
+        function copyIP(ip) {
+            navigator.clipboard.writeText(ip).then(() => {
+                showNotification(`IP Copied!`, 'success');
+            }).catch(() => {
+                alert(`Copy this IP: ${ip}`);
+            });
+        }
+
+        // Account Modal
+        function openAccountModal() {
+            document.getElementById('account-modal').classList.add('active');
+            checkLoginStatus();
+        }
+
+        function closeAccountModal() {
+            document.getElementById('account-modal').classList.remove('active');
+        }
+
+        function checkLoginStatus() {
+            const loggedUser = localStorage.getItem('loggedUser');
+
+            if (loggedUser) {
+                const userData = JSON.parse(loggedUser);
+                document.getElementById('login-form').style.display = 'none';
+                document.getElementById('account-info').style.display = 'block';
+                document.getElementById('acc-nickname').textContent = userData.nickname;
+                document.getElementById('acc-member-since').textContent = userData.memberSince;
+                document.getElementById('user-display-name').textContent = userData.nickname;
+            } else {
+                document.getElementById('login-form').style.display = 'block';
+                document.getElementById('account-info').style.display = 'none';
+                document.getElementById('user-display-name').textContent = 'No Account';
+            }
+        }
+
+        function handleLogin() {
+            const nickname = document.getElementById('login-nickname').value.trim();
+            const password = document.getElementById('login-password').value.trim();
+
+            if (!nickname || !password) {
+                showNotification('Please fill all fields!', 'error');
+                return;
+            }
+
+            // Get registered users from localStorage (Local Login logic)
+            const users = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+            const user = users.find(u => u.nickname === nickname && u.password === password);
+
+            if (user) {
+                localStorage.setItem('loggedUser', JSON.stringify(user));
+                showNotification('Login successful!', 'success');
+                checkLoginStatus();
+            } else {
+                showNotification('Invalid credentials!', 'error');
+            }
+        }
+
+        function handleLogout() {
+            localStorage.removeItem('loggedUser');
+            showNotification('Logged out successfully!', 'success');
+            checkLoginStatus();
+            closeAccountModal();
+        }
+
+        // Personal Account Page functions
+        function handleLoginPage() {
+            const nickname = document.getElementById('login-nickname-page').value.trim();
+            const password = document.getElementById('login-password-page').value.trim();
+
+            if (!nickname || !password) {
+                showNotification('Please fill all fields!', 'error');
+                return;
+            }
+
+            const users = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+            const user = users.find(u => u.nickname === nickname && u.password === password);
+
+            if (user) {
+                localStorage.setItem('loggedUser', JSON.stringify(user));
+                showNotification('Login successful!', 'success');
+                checkLoginStatusPage();
+                checkLoginStatus();
+            } else {
+                showNotification('Invalid credentials!', 'error');
+            }
+        }
+
+        function handleLogoutPage() {
+            localStorage.removeItem('loggedUser');
+            showNotification('Logged out successfully!', 'success');
+            checkLoginStatusPage();
+            checkLoginStatus();
+        }
+
+        function checkLoginStatusPage() {
+            const loggedUser = localStorage.getItem('loggedUser');
+
+            if (loggedUser) {
+                const userData = JSON.parse(loggedUser);
+                document.getElementById('login-form-page').style.display = 'none';
+                document.getElementById('account-info-page').style.display = 'block';
+                document.getElementById('acc-nickname-page').textContent = userData.nickname;
+                document.getElementById('acc-member-since-page').textContent = userData.memberSince;
+            } else {
+                document.getElementById('login-form-page').style.display = 'block';
+                document.getElementById('account-info-page').style.display = 'none';
+            }
+        }
+
+        // Support Modal
+        function openSupportModal() {
+            document.getElementById('support-modal').classList.add('active');
+        }
+
+        function closeSupportModal() {
+            document.getElementById('support-modal').classList.remove('active');
+        }
+
+        // Payment Help
+        function showPaymentHelp() {
+            showNotification('For Help Join Our Discord Community!', 'info');
+        }
+
+        // Download Client
+        function handleDownload() {
+            showNotification('Download starting...', 'info');
+            setTimeout(() => {
+                showNotification('Client Downloaded!', 'success');
+            }, 2000);
+        }
+
+        // Load list from SERVER (VIP Test Testers with dates)
+        function loadTestersList() {
+             fetch(window.location.href, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'get_vip_test_Testers' })
+            })
+            .then(res => res.json())
+            .then(Testers => {
+                const tbody = document.getElementById('Testers-table-body');
+
+                if (!Testers || Testers.length === 0) {
+                     tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: #999;">No VIP Test activations yet</td></tr>';
+                     return;
+                }
+
+                tbody.innerHTML = Testers.map(tester => `
+                    <tr>
+                        <td>
+                            <div class="player-info">
+                                <div class="acc-logo">
+                                    <i class="fa-solid fa-user"></i>
+                                </div>
+                                <span class="player-name">${tester.nickname}</span>
+                            </div>
+                        </td>
+                        <td>${tester.privilege}</td>
+                        <td><span class="server-badge">${tester.server}</span></td>
+                        <td>${tester.date}</td>
+                    </tr>
+                `).join('');
+            })
+            .catch(err => console.error("Error loading Testers:", err));
+        }
+
+        // Initialize
+        window.addEventListener('load', () => {
+            console.log('%cULTIMATEX® COMMUNITY', 'color: #00f3ff; font-size: 30px; font-weight: bold;');
+            loadTestersList();
+            checkLoginStatus();
+            checkLoginStatusPage();
+        });
+
+        // ESC to close
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeAccountModal();
+                closeSupportModal();
+                closeZoom();
+            }
+        });
+    </script>
+</body>
+
+</html>
